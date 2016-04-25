@@ -25,49 +25,72 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: '/search',
+  .state('app.speakers', {
+    url: '/speakers',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/speakers.html',
+        controller: 'SpeakerCtrl'
       }
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
+  .state('app.workshops', {
+    url: '/workshops',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        templateUrl: 'templates/workshops.html',
+        controller: 'WorkshopCtrl'
+      }
+    }
+  })
+  
+  .state('app.hackathon', {
+    url: '/hackathon',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/hackathon.html',
+        controller: 'HackathonCtrl'
+      }
+    }
+  })
+
+  .state('app.sponsors', {
+    url: '/sponsors',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/sponsors.html',
+        controller: 'SponsorCtrl'
+      }
+    }
+  })
+
+  .state('app.speaker_detail', {
+    url: '/speakers/:speakerId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/speaker.html',
+        controller: 'SpeakerCtrl'
+      }
+    }
+  })
+
+  .state('app.workshop_detail', {
+    url: '/workshops/:workshopId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/workshop.html',
+        controller: 'WorkshopCtrl'
       }
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/speakers');
 });

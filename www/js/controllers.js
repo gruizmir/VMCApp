@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -11,6 +11,7 @@ angular.module('starter.controllers', [])
 
   // Form data for the login modal
   $scope.loginData = {};
+  $scope.api_url = 'http://localhost:8000'
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -41,16 +42,152 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.factory('Sponsors', function() {
+  return {
+    all: function() {
+      // var projectString = window.localStorage['projects'];
+      // if(projectString) {
+         // return angular.fromJson(projectString);
+      // }
+      return [];
+    },
+    save: function(projects) {
+      // window.localStorage['projects'] = angular.toJson(projects);
+    },
+    new: function(jsonObject) {
+      //Crear a new project
+      var object = angular.fromJson(jsonObject);
+      object.logo = 'http://localhost:8000' + object.logo;
+      return object;
+    }
+  }
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.factory('Speakers', function() {
+  return {
+    all: function() {
+      // var projectString = window.localStorage['projects'];
+      // if(projectString) {
+         // return angular.fromJson(projectString);
+      // }
+      return [];
+    },
+    save: function(projects) {
+      // window.localStorage['projects'] = angular.toJson(projects);
+    },
+    new: function(jsonObject) {
+      //Crear a new project
+      var object = angular.fromJson(jsonObject);
+      object.profile_picture = 'http://localhost:8000' + object.profile_picture;
+      return object;
+    }
+  }
+})
+
+.factory('HackTeams', function() {
+  return {
+    all: function() {
+      // var projectString = window.localStorage['projects'];
+      // if(projectString) {
+         // return angular.fromJson(projectString);
+      // }
+      return [];
+    },
+    save: function(projects) {
+      // window.localStorage['projects'] = angular.toJson(projects);
+    },
+    new: function(jsonObject) {
+      //Crear a new project
+      var object = angular.fromJson(jsonObject);
+      object.team_picture = 'http://localhost:8000' + object.team_picture;
+      return object;
+    }
+  }
+})
+
+.factory('Workshops', function() {
+  return {
+    all: function() {
+      // var projectString = window.localStorage['projects'];
+      // if(projectString) {
+         // return angular.fromJson(projectString);
+      // }
+      return [];
+    },
+    save: function(projects) {
+      // window.localStorage['projects'] = angular.toJson(projects);
+    },
+    new: function(jsonObject) {
+      //Crear a new project
+      var object = angular.fromJson(jsonObject);
+      object.profile_picture = 'http://localhost:8000' + object.profile_picture;
+      return object;
+    }
+  }
+})
+
+.controller('SpeakerCtrl', function($scope, $ionicLoading, $http, Speakers) {
+  $scope.speakers = [];
+  var url = $scope.api_url + '/speakers/';
+  console.log(url);
+
+  // TODO: Enviar esto dentro del factory
+  $http.get(url)
+    .success(function(response) {
+      console.log(response);
+      angular.forEach(response, function(object){
+        var speaker = Speakers.new(object);
+        $scope.speakers.push(speaker);
+      });
+    })
+    .error(function(response) {
+      console.log(response);
+    });
+
+})
+
+.controller('SpeakerCtrl', function($scope, $stateParams, $ionicLoading,  $http, Speakers) {
+  $scope.speaker = null;
+})
+
+.controller('WorkshopCtrl', function($scope, $ionicLoading, $http, Workshops) {
+  $scope.workshops = [];
+
+})
+
+.controller('WorkshopCtrl', function($scope, $stateParams, $ionicLoading, Workshops) {
+})
+
+.controller('HackathonCtrl', function($scope, $ionicLoading, $http, HackTeams) {
+  $scope.teams = [];
+  var url = $scope.api_url + '/teams/';
+
+  // TODO: Enviar esto dentro del factory
+  $http.get(url)
+    .success(function(response) {
+      angular.forEach(response, function(object){
+        var team = HackTeams.new(object);
+        $scope.teams.push(team);
+      });
+    })
+    .error(function(response) {
+      console.log(response);
+    });
+})
+
+.controller('SponsorCtrl', function($scope, $ionicLoading, $http, Sponsors) {
+  $scope.sponsors = [];
+  var url = $scope.api_url + '/sponsors/';
+  // TODO: Enviar esto dentro del factory
+  $http.get(url)
+    .success(function(response) {
+      angular.forEach(response, function(object){
+        var sponsor = Sponsors.new(object);
+        $scope.sponsors.push(sponsor);
+      });
+    })
+    .error(function(response) {
+      console.log(response);
+    });
+
 });

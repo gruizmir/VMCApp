@@ -1,0 +1,10 @@
+<ion-view view-title="Expositores">
+  <ion-content>
+  <div class="card" ng-repeat="speaker in speakers" href="#/app/speakers/{{speaker.id}}">
+	  <div class="item item-image">
+		  <h2>{{speaker.name}}</h2>
+		  <img src="{{speaker.profile_picture}}">
+	  </div>
+	</div>	
+  </ion-content>
+</ion-view>

@@ -1,0 +1,9 @@
+<ion-view view-title="Talleres">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="workshop in workshops" href="#/app/workshops/{{workshop.id}}">
+        {{workshop.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
